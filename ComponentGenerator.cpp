@@ -609,7 +609,7 @@ void genAlgorithm() {
   // Registers
   output
   << "  -- Registers\n"
-  << "  signal mr_reg: std_logic_vector(g_n - 1 downto 0);\n"
+  << "  signal mr_reg: std_logic_vector(g_n - 1 downto 0) := (others => '1');\n"
   << "  signal prod_reg: std_logic_vector(g_n + g_m - 1 downto 0);\n\n";
 
   // Intermediate Signals
@@ -621,7 +621,12 @@ void genAlgorithm() {
   << "  signal xor_output: std_logic_vector(g_n - 1 downto 0);\n"
   << "  signal adder_output: std_logic_vector(g_n + g_m - 1 downto 0);\n"
   << "  signal adder_cout: std_logic;\n"
-  << "  signal hw_done: std_logic;\n\n";
+  << "  signal hw_done: std_logic := '0';\n"
+  << "  signal active: std_logic := '0';\n"
+  << "  attribute dont_touch: string;\n"
+  << "  attribute dont_touch of shifter_output: signal is \"true\";\n"
+  << "  attribute dont_touch of active: signal is \"true\";\n\n";
+
 
   // Begin
   output << "begin\n";
@@ -648,24 +653,25 @@ void genAlgorithm() {
   << "  xor_output <= mr_reg xor decoder_output;\n"
   << "  prod <= prod_reg;\n"
   << "  s_prod <= s_mr xor s_md;\n"
-  << "  done <= hw_done;\n\n";
+  << "  hw_done <= not or_reduce(mr_reg);\n\n";
 
   // Clock Sensitive Logic
   output
   << "  process (clk, reset) begin\n"
   << "    if (reset = '1') then\n"
-  << "      mr_reg <= (others => '1'); -- set all 1s initially to avoid false done\n"
+  << "      mr_reg <= (others => '1'); -- set all 1s initially to avoid premature done\n"
   << "      prod_reg <= (others => '0');\n"
-  << "      hw_done <= '0';\n"
+  << "      done <= '0';\n"
   << "    elsif (clk'event and clk = '1') then\n"
-  << "      if (start = '1') then\n"
+  << "      done <= hw_done;\n"
+  << "      if (start = '1' and active = '0') then\n"
   << "        mr_reg <= mr; -- take initial value of multiplier\n"
   << "        prod_reg <= (others => '0'); -- reset product register\n"
-  << "      elsif (hw_done = '0') then\n"
+  << "        active <= '1';\n"
+  << "      elsif (active = '1' and hw_done = '0') then\n"
   << "        mr_reg <= xor_output;\n"
   << "        prod_reg <= adder_output;\n"
   << "      end if;\n"
-  << "      hw_done <= not or_reduce(mr_reg);\n"
   << "    end if;\n"
   << "  end process;\n";
 
