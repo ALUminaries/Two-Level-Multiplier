@@ -69,12 +69,14 @@ architecture structural of multiplier_256 is
   signal encoder_output: std_logic_vector(g_log2n - 1 downto 0);
   signal decoder_output: std_logic_vector(g_n - 1 downto 0);
   signal shifter_output: std_logic_vector(g_n + g_m - 1 downto 0);
-  attribute dont_touch: string;
-  attribute dont_touch of shifter_output: signal is "true";
   signal xor_output: std_logic_vector(g_n - 1 downto 0);
   signal adder_output: std_logic_vector(g_n + g_m - 1 downto 0);
   signal adder_cout: std_logic;
   signal hw_done: std_logic := '0';
+  signal active: std_logic := '0';
+  attribute dont_touch: string;
+  attribute dont_touch of shifter_output: signal is "true";
+  attribute dont_touch of active: signal is "true";
 
 begin
   -- Instantiate Components
@@ -94,22 +96,20 @@ begin
   xor_output <= mr_reg xor decoder_output;
   prod <= prod_reg;
   s_prod <= s_mr xor s_md;
---  done <= hw_done;
   hw_done <= not or_reduce(mr_reg);
 
   process (clk, reset) begin
     if (reset = '1') then
-      mr_reg <= (others => '1'); -- set all 1s initially to avoid false done
+      mr_reg <= (others => '1'); -- set all 1s initially to avoid premature done
       prod_reg <= (others => '0');
---      hw_done <= '0';
       done <= '0';
     elsif (clk'event and clk = '1') then
---      hw_done <= not or_reduce(mr_reg);
       done <= hw_done;
-      if (start = '1') then
+      if (start = '1' and active = '0') then
         mr_reg <= mr; -- take initial value of multiplier
         prod_reg <= (others => '0'); -- reset product register
-      elsif (hw_done = '0') then
+        active <= '1';
+      elsif (active = '1' and hw_done = '0') then
         mr_reg <= xor_output;
         prod_reg <= adder_output;
       end if;
