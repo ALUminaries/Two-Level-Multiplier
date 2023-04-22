@@ -1,3 +1,8 @@
+-- Authors: Maxwell Phillips, Hayden Drennen, Nathan Hagerdorn
+-- Copyright: Ohio Northern University, 2023.
+-- License: GPL v3
+-- Description: High-level component for two-level multiplier.
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -103,6 +108,7 @@ begin
       mr_reg <= (others => '1'); -- set all 1s initially to avoid premature done
       prod_reg <= (others => '0');
       done <= '0';
+      active <= '0';
     elsif (clk'event and clk = '1') then
       done <= hw_done;
       if (start = '1' and active = '0') then
