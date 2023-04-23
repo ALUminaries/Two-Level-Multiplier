@@ -43,6 +43,8 @@
 -- Revision History:
 --  08/08/2011 (SamB): Created using Xilinx Tools 13.2
 --  04/10/2023 (MaxP): Borrowed from Basys 3 examples; cleaned up code.
+--  04/22/2023 (MaxP): Constrained range of bitIndex to prevent using
+--                     27 unnecessary flip-flops.
 ----------------------------------------------------------------------------
 library IEEE;
 use IEEE.std_logic_1164.all;
@@ -78,7 +80,7 @@ architecture behavioral of tx_controller is
   signal bitDone: std_logic;
 
   -- Contains the index of the next bit in txData that needs to be transferred 
-  signal bitIndex: natural;
+  signal bitIndex: natural range 0 to PACKET_BITS;
 
   -- A register that holds the current data being sent over the UART TX line
   signal txBit: std_logic := '1';
