@@ -1,7 +1,7 @@
 -- Authors: Maxwell Phillips
 -- Copyright: Ohio Northern University, 2023.
 -- License: GPL v3
--- Description: Serial transceiver for use with 256-bit multiplier.
+-- Description: Serial transceiver for use with 128-bit multiplier.
 
 library IEEE;
 use IEEE.std_logic_1164.all;
@@ -14,9 +14,9 @@ entity transceiver is
     bits: integer := 8;
     clk_freq: integer := 100000000; -- board clk
     baud_rate: integer := 9600;
-    bytes: integer := 64; -- how many bytes to process/expect
-    g_n: integer := 256;  -- Input (multiplier) length is n
-    g_m: integer := 256   -- Input (multiplicand) length is m
+    bytes: integer := 32; -- how many bytes to process/expect
+    g_n: integer := 128;  -- Input (multiplier) length is n
+    g_m: integer := 128   -- Input (multiplicand) length is m
   );
   port( 
     clk: in std_logic;
@@ -78,7 +78,7 @@ architecture behavioral of transceiver is
   --   );
   -- end component;
 
-  component multiplier_256
+  component multiplier_128
     port(
       clk: in std_logic;
       start: in std_logic;
@@ -126,8 +126,8 @@ architecture behavioral of transceiver is
   -- clock divider
   signal div_clk, div_clk_valid: std_logic;
   signal hw_reset: std_logic;
-  signal div_clk_counter: std_logic_vector(8 downto 0);
-  constant DIV_CLK_MAX: std_logic_vector(8 downto 0) := (others => '1');
+  signal div_clk_counter: std_logic_vector(0 downto 0);
+  constant DIV_CLK_MAX: std_logic_vector(0 downto 0) := (others => '1');
     
 begin
 
@@ -162,7 +162,7 @@ begin
   div_clk <= '1' when (div_clk_counter(div_clk_counter'left) = '1') else '0';
   
   
-  multiplier: multiplier_256 port map (
+  multiplier: multiplier_128 port map (
     clk => div_clk,
     start => start_processing,
     reset => hw_reset,
