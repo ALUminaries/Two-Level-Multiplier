@@ -9,7 +9,7 @@ use IEEE.numeric_std.all;
 use IEEE.std_logic_unsigned.all;
 
 entity priority_encoder is
-port( inp: in std_logic_vector(63 downto 0);
+port( input: in std_logic_vector(63 downto 0);
       output: out std_logic_vector(5 downto 0)
 );
 end priority_encoder;
