@@ -15,7 +15,7 @@ entity CLA8192 is
         Co, PG, GG: out std_logic
         );
 end CLA8192;
-architecture Structure of CLA16384 is  
+architecture Structure of CLA8192 is  
     component CLA4096 is
         port(
             A, B: in std_logic_vector(4095 downto 0);
