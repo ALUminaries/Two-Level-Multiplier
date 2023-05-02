@@ -10,3 +10,8 @@ The following resources are also useful when testing the hardware:
 - [Random 256-Bit Number Generator](https://numbergenerator.org/random-256-bit-binary-number) (similar generators are also available for higher input lengths)
 - [High Precision Base Converter](https://baseconvert.com/high-precision)
 - [Big Number Calculator](https://www.calculator.net/big-number-calculator.html) (Warning: truncates past ~4096-bit operands)
+
+## Example
+Below is an illustrative example with a small input size of our algorithm and the first two cycles of the hardware.
+
+![example.png](https://github.com/ALUminaries/Two-Level-Multiplier/main/Illustrative%20Example.png)
