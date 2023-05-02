@@ -14,4 +14,4 @@ The following resources are also useful when testing the hardware:
 ## Example
 Below is an illustrative example with a small input size of our algorithm and the first two cycles of the hardware.
 
-![example.png](https://github.com/ALUminaries/Two-Level-Multiplier/main/Illustrative%20Example.png)
+![example.png](https://github.com/ALUminaries/Two-Level-Multiplier/blob/main/Illustrative%20Example.png)
