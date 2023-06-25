@@ -1,6 +1,6 @@
 # Two-Level-Multiplier
 
-This repository contains the source code for a VHDL implementation of the multiplication algorithm using a two-level hardware structure proposed in the paper "Leveraging a Novel Two-Level Priority Encoder for High-Precision Integer Multiplication." It contains several prefabricated sizes of square multipliers, as well as a C++ program to generate most components of new multipliers. The exception is carry-look-ahead adders and small priority encoders, which can be created from existing files.
+This repository contains the source code for a VHDL implementation of the multiplication algorithm using a two-level hardware structure proposed in the paper "Leveraging a Novel Two-Level Priority Encoder for High-Precision Integer Multiplication." It contains several prefabricated sizes of square multipliers, as well as a C++ program to generate most components of new multipliers. The exceptions are carry-look-ahead adders, small priority encoders, and transceiver containers, which can be created from existing files.
 
 The 'Software Simulator' folder also contains a high-level simulation of the multiplication algorithm, written in Kotlin. You can also test it easily online on Kotlin Playground here: [https://pl.kotl.in/j2RgjnehS](https://pl.kotl.in/j2RgjnehS).
 
