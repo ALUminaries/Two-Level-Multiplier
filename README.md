@@ -1,6 +1,6 @@
 # Two-Level-Multiplier
 
-This repository contains source code for a VHDL implementation of the high-precision integer multiplication algorithm proposed in the paper "Leveraging a Novel Two-Level Priority Encoder for High-Precision Integer Multiplication." All components are generalized such that only generics need modified to adapt the hardware to different bit precisions.
+This repository contains source code for a VHDL implementation of the high-precision integer multiplication algorithm proposed in the paper "[Leveraging a Novel Two-Level Priority Encoder for High-Precision Integer Multiplication](https://doi.org/10.1109/MWSCAS57524.2023.10405960)." All components are generalized such that only generics need modified to adapt the hardware to different bit precisions.
 
 ### Files
 
